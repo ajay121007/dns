@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="DNSTitleHeaderView" customModule="DNS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ffs-f0-8WH">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omF-31-vPG">
+                            <rect key="frame" x="15" y="14" width="37" height="17"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJt-pX-AqL">
+                            <rect key="frame" x="15" y="0.0" width="345" height="1"/>
+                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="ywp-Pf-MVM"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="omF-31-vPG" firstAttribute="centerY" secondItem="ffs-f0-8WH" secondAttribute="centerY" id="79I-fa-Mst"/>
+                        <constraint firstAttribute="trailing" secondItem="bJt-pX-AqL" secondAttribute="trailing" constant="15" id="HyO-32-LPw"/>
+                        <constraint firstItem="omF-31-vPG" firstAttribute="leading" secondItem="ffs-f0-8WH" secondAttribute="leading" constant="15" id="SVq-z3-8B6"/>
+                        <constraint firstItem="bJt-pX-AqL" firstAttribute="top" secondItem="ffs-f0-8WH" secondAttribute="top" id="V3A-hO-zRb"/>
+                        <constraint firstAttribute="height" constant="45" id="kPm-9T-H7m"/>
+                        <constraint firstItem="bJt-pX-AqL" firstAttribute="leading" secondItem="ffs-f0-8WH" secondAttribute="leading" constant="15" id="xHs-hv-Wdo"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ffs-f0-8WH" secondAttribute="bottom" id="BP1-FF-umM"/>
+                <constraint firstItem="ffs-f0-8WH" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="IfE-zI-a4d"/>
+                <constraint firstItem="ffs-f0-8WH" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="qcc-RD-CN2"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ffs-f0-8WH" secondAttribute="trailing" id="zHR-8l-d78"/>
+            </constraints>
+            <connections>
+                <outlet property="lblLine" destination="bJt-pX-AqL" id="sSO-de-wOd"/>
+                <outlet property="lblTitle" destination="omF-31-vPG" id="9wl-ci-QNf"/>
+            </connections>
+            <point key="canvasLocation" x="-18" y="-1"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
