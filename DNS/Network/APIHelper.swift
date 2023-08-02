@@ -20,7 +20,7 @@ func server(url:String,apiMethod:String="Get",completion:@escaping([String:Any],
             if let data = data {
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print("response json:- ",json as? [String:Any] ?? [:])
+                    //print("response json:- ",json as? [String:Any] ?? [:])
                     completion(json as? [String:Any] ?? [:],data, true)
                 } catch {
                     let dict = ["status_code":500,"error":error.localizedDescription ] as [String : Any]

@@ -20,8 +20,8 @@ class DNSViewModel: NSObject {
     }
     
     class func destroy() {privateShared = nil}
-    private override init() {print("init singleton")}
-    deinit {print("deinit singleton")}
+    private override init() {Logger.log("init singleton")}
+    deinit {Logger.log("deinit singleton")}
     
     private var ipListArray : [DNSModel]? = []
     private var dnsListArray : [DNSModel]? = []
@@ -82,7 +82,7 @@ extension DNSViewModel{
     }
     
     func getIPListDetail(indexPath:IndexPath)->DnsDetailTuppleKeys{
-        //guard ipListArray?.count ?? 0 > indexPath.row else {return  DnsDetailTuppleKeys()}
+        guard ipListArray?.count ?? 0 > indexPath.row else {return  DnsDetailTuppleKeys()}
         let obj = ipListArray?[indexPath.row]
         return DnsDetailTuppleKeys(ip: obj?.ip ?? "",
                                    country_name: obj?.country_name ?? "",
@@ -96,7 +96,7 @@ extension DNSViewModel{
     }
     
     func getDnsListDetail(indexPath:IndexPath)->DnsDetailTuppleKeys{
-      //  guard dnsListArray?.count ?? 0 > indexPath.row else {return  DnsDetailTuppleKeys()}
+        guard dnsListArray?.count ?? 0 > indexPath.row else {return  DnsDetailTuppleKeys()}
         let obj = dnsListArray?[indexPath.row]
         return DnsDetailTuppleKeys(ip: obj?.ip ?? "",
                                    country_name: obj?.country_name ?? "",

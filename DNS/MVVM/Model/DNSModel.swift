@@ -35,7 +35,7 @@ struct DNSModel : Codable {
             asn = try values.decodeIfPresent(String.self, forKey: .asn)
             type = try values.decodeIfPresent(String.self, forKey: .type)
         }catch{
-            print("error misType:-",error)
+            Logger.log(("error misType:- \(error)"))
         }
     }
 
