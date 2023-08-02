@@ -20,6 +20,7 @@ class DNSHeaderView: UIView {
     static var share: DNSHeaderView? = nil
     
     public var btnStartClick : ((DNSHeaderView)->Void)?
+    public var vwTouchClick : ((DNSHeaderView)->Void)?
     
     static var instance: DNSHeaderView {
         
@@ -33,6 +34,10 @@ class DNSHeaderView: UIView {
     
     @IBAction func btnStartAction(_ sender: Any) {
         self.btnStartClick?(self)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.vwTouchClick?(self)
     }
     
 

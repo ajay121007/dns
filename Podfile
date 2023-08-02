@@ -6,10 +6,6 @@ target 'DNS' do
   use_frameworks!
 
   # Pods for DNS
-  #pod "MMLoadingButton"
-  pod 'Alamofire'
-  pod 'IQKeyboardManagerSwift'
   pod 'SSSpinnerButton'
-  pod 'DropDown'
 
 end

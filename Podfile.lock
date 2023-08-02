@@ -1,28 +1,16 @@
 PODS:
-  - Alamofire (5.6.4)
-  - DropDown (2.3.13)
-  - IQKeyboardManagerSwift (6.5.11)
   - SSSpinnerButton (3.2.0)
 
 DEPENDENCIES:
-  - Alamofire
-  - DropDown
-  - IQKeyboardManagerSwift
   - SSSpinnerButton
 
 SPEC REPOS:
   trunk:
-    - Alamofire
-    - DropDown
-    - IQKeyboardManagerSwift
     - SSSpinnerButton
 
 SPEC CHECKSUMS:
-  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
-  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
-  IQKeyboardManagerSwift: c7955c0bdbf7b2eb29bb7daaa44e3d90f55a9a85
   SSSpinnerButton: 18386219b5fa73c23d96668042fe5da03b407f68
 
-PODFILE CHECKSUM: e304d1805ee19de196250ce033b502c3d11a98ac
+PODFILE CHECKSUM: 8a418aa746e8277abb92b3caf0aa12e05ab836f2
 
 COCOAPODS: 1.12.1

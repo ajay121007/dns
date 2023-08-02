@@ -6,10 +6,14 @@
 //
 
 import UIKit
-import DropDown
 
 class DnsLeakListVC: UIViewController {
 
+    @IBOutlet weak var vwDropdown: UIView!{
+        didSet{
+            vwDropdown.layer.cornerRadius = 5
+        }
+    }
     @IBOutlet weak var btnOption: UIButton!
     @IBOutlet weak var tblVw: UITableView!{
         didSet{
@@ -17,6 +21,7 @@ class DnsLeakListVC: UIViewController {
             tblVw.dataSource = self
             tblVw.registerNib(cell: DNSDetailTblCell.self)
             tblVw.registerNib(cell: DnsNotLeakTblCell.self)
+            tblVw.isUserInteractionEnabled = true
         }
     }
     
@@ -32,65 +37,39 @@ class DnsLeakListVC: UIViewController {
         case loading = "The test is running, please wait..."
     }
     
-    private enum optionMenu : String ,CaseIterable{
-        case PrivacyPolicy = "Privacy policy"
-        case About = "About"
-    }
-    
     private enum dnsUrls : String {
         case PrivacyPolicy = "https://bash.ws/privacy"
         case About = "https://bash.ws/about"
         case DnsLeak = "https://bash.ws/dnsleak"
     }
     
-   private let dropDown = DropDown()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        setUpDropDownUI()
+        
     }
     
     @IBAction func btnOptionAction(_ sender: Any) {
-        dropDown.show()
+        vwDropdown.isHidden = vwDropdown.isHidden == true ? false : true
     }
     
-    
-}
-
-//MARK: SETUP DROPDOWN UI
-extension DnsLeakListVC{
-    
-    func setUpDropDownUI(){
-        // The view to which the drop down will appear on
-        dropDown.anchorView = btnOption // UIView or UIBarButtonItem
-        
-        dropDown.bottomOffset = CGPoint(x: 0, y: btnOption.bounds.height)
-
-        // The list of items to display. Can be changed dynamically
-        dropDown.dataSource = [optionMenu.PrivacyPolicy.rawValue, optionMenu.About.rawValue]
-        dropDown.selectionBackgroundColor = .clear
-        // Action triggered on selection
-        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
-            if item == optionMenu.PrivacyPolicy.rawValue{
-                guard let url = URL(string: dnsUrls.PrivacyPolicy.rawValue)else{
-                    Logger.log("invalid url")
-                    return
-                }
-                self.openInSafari(url: url)
-            }else if item == optionMenu.About.rawValue{
-                guard let url = URL(string: dnsUrls.About.rawValue)else{
-                    Logger.log("invalid url")
-                    return
-                }
-                self.openInSafari(url: url)
-            }
+    @IBAction func btnPrivacyPolicyAction(_ sender: Any) {
+        vwDropdown.isHidden = true
+        guard let url = URL(string: dnsUrls.PrivacyPolicy.rawValue)else{
+            Logger.log("invalid url")
+            return
         }
-
-        // Will set a custom width instead of the anchor view width
-        dropDown.width = 150
+        self.openInSafari(url: url)
+    }
+    
+    @IBAction func btnAboutAction(_ sender: Any) {
+        vwDropdown.isHidden = true
+        guard let url = URL(string: dnsUrls.About.rawValue)else{
+            Logger.log("invalid url")
+            return
+        }
+        self.openInSafari(url: url)
     }
     
 }
@@ -126,6 +105,9 @@ extension DnsLeakListVC:UITableViewDelegate,UITableViewDataSource{
             cell.lblFlag.text = obj.country?.countryFlag() ?? ""
             cell.lblCountry.text = obj.country_name ?? ""
             cell.lblIpAddress.text = obj.asn ?? ""
+            cell.vwTouchClick = {[weak self] ( _ ) in
+                self?.vwDropdown.isHidden = true
+            }
             return cell
             
         case .dns:
@@ -135,6 +117,9 @@ extension DnsLeakListVC:UITableViewDelegate,UITableViewDataSource{
             cell.lblFlag.text = obj.country?.countryFlag() ?? ""
             cell.lblCountry.text = obj.country_name ?? ""
             cell.lblIpAddress.text = obj.asn ?? ""
+            cell.vwTouchClick = {[weak self] ( _ ) in
+                self?.vwDropdown.isHidden = true
+            }
             return cell
             
         case .conclusion:
@@ -146,6 +131,7 @@ extension DnsLeakListVC:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        vwDropdown.isHidden = true
         switch headerTitle.allCases[indexPath.section]{
         case .conclusion:
             guard let url = URL(string: dnsUrls.DnsLeak.rawValue)else{
@@ -165,6 +151,7 @@ extension DnsLeakListVC:UITableViewDelegate,UITableViewDataSource{
         case .header:
             let vw = DNSHeaderView.instance
             vw.btnStartClick = { [weak self] ( _ ) in
+                self?.vwDropdown.isHidden = true
                 vw.constraintWidthBtnStart.constant = 50
                 vw.btnStart.startAnimate(spinnerType: .circleStrokeSpin, spinnercolor: .black) { [weak self] in
                     vw.lblProcessing.text = loadingMsg.loading.rawValue
@@ -182,6 +169,9 @@ extension DnsLeakListVC:UITableViewDelegate,UITableViewDataSource{
                         }
                     }
                 }
+            }
+            vw.vwTouchClick = { [weak self] ( _ ) in
+                self?.vwDropdown.isHidden = true
             }
             return vw
             
@@ -215,7 +205,7 @@ extension DnsLeakListVC{
     
     func getIP(completion:@escaping()->Void){
         DNSViewModel.shared().pinServer { [weak self] (subDomainId) in
-                // DNSViewModel.shared().getIPList(subDomainId: subDomainId)
+            // DNSViewModel.shared().getIPList(subDomainId: subDomainId)
             DNSViewModel.shared().getIPList(subDomainId: subDomainId) { [weak self] (success,msg) in
                 if success{
                     

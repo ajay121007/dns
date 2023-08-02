@@ -58,7 +58,8 @@ extension DNSViewModel{
     
     public func getIPList(subDomainId:Int,completion:@escaping (Bool,String)->Void){
         let getUrl = String(format: APIConstant.kGetIP, subDomainId)
-        server(url: getUrl, apiMethod: .get, param: nil, header: nil) { response, responseData, success in
+        
+        server(url: getUrl, apiMethod: "GET") { response, responseData, success in
             //completion()
             if response["error"] as? String == "" || response["error"] as? String == nil{
                 let dnsArray = try? JSONDecoder().decode([DNSModel].self, from: responseData ?? Data())

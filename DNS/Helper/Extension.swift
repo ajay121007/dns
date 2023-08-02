@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import Alamofire
+import SystemConfiguration
 
 extension UITableView {
     /**
@@ -52,31 +52,6 @@ class Logger {
     }
 }
 
-class Connectivity {
-    class func isConnectedToInternet() -> Bool {
-        return NetworkReachabilityManager()?.isReachable ?? false
-    }
-}
-
-extension String {
-
-    func format(_ arguments: CVarArg...) -> String {
-        let args = arguments.map {
-            if let arg = $0 as? Int { return String(arg) }
-            if let arg = $0 as? Float { return String(arg) }
-            if let arg = $0 as? Double { return String(arg) }
-            if let arg = $0 as? Int64 { return String(arg) }
-            if let arg = $0 as? String { return String(arg) }
-            if let arg = $0 as? Character { return String(arg) }
-
-            return "(null)"
-        } as [CVarArg]
-
-        return String.init(format: self, arguments: args)
-    }
-
-}
-
 
 extension String{
     
@@ -102,9 +77,46 @@ extension UIViewController{
         let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         
         alertCon.addAction(alertAction)
-        
-        self.present(alertCon, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.present(alertCon, animated: true, completion: nil)
+        }
         
     }
     
+}
+
+public class Reachability {
+
+    class func isConnectedToNetwork() -> Bool {
+
+        var zeroAddress = sockaddr_in(sin_len: 0, sin_family: 0, sin_port: 0, sin_addr: in_addr(s_addr: 0), sin_zero: (0, 0, 0, 0, 0, 0, 0, 0))
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+
+        var flags: SCNetworkReachabilityFlags = SCNetworkReachabilityFlags(rawValue: 0)
+        if SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) == false {
+            return false
+        }
+
+        /* Only Working for WIFI
+        let isReachable = flags == .reachable
+        let needsConnection = flags == .connectionRequired
+
+        return isReachable && !needsConnection
+        */
+
+        // Working for Cellular and WIFI
+        let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
+        let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
+        let ret = (isReachable && !needsConnection)
+
+        return ret
+
+    }
 }
